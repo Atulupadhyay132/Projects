@@ -1,0 +1,74 @@
+.home-bg {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    background-image: url("./bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Header */
+#headerSection {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+#headerSection h1 {
+    font-family: cursive;
+}
+
+/* Body section box */
+#bodySection {
+    background: rgba(255, 255, 255, 0.8);
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Inputs */
+input {
+    padding: 10px;
+    border-radius: 5px;
+    width: 90%;
+}
+
+/* Dropdown */
+#dropbox {
+    padding: 10px;
+    border-radius: 5px;
+    width: 95%;
+}
+
+/* Login button */
+#loginbtn {
+    padding: 7px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #48dbfb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+
+.admin-bg {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: url("bg2.png");
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+/* Cards thode transparent + premium look */
+.card-box {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}

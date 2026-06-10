@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us - Modern Voting</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bg2.png');
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-card {
+            display: flex;
+            width: 900px;
+            height: 550px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Left Section: Info */
+        .left-info {
+            flex: 1;
+            background: #1a2a6c;
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-info h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #f1c40f;
+        }
+
+        .detail {
+            margin-bottom: 30px;
+        }
+
+        .detail span {
+            color: #aaa;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .detail p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        /* Right Section: Form */
+        .right-form {
+            flex: 1.5;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .right-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #11998e;
+            box-shadow: 0 0 8px rgba(17, 153, 142, 0.2);
+        }
+
+        .submit-btn {
+            background: #11998e;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background: #0c7e75;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            color: #11998e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-card">
+        <div class="left-info">
+            <h2>CONTACT US</h2>
+            <div class="detail">
+                <span>EMAIL</span>
+                <p>Atul.k.n.u@gmail.com</p>
+            </div>
+            <div class="detail">
+                <span>PHONE</span>
+                <p>+91 91674 35451</p>
+            </div>
+            <div class="detail">
+                <span>LOCATION</span>
+                <p>Digha, Navi mumbai MIDC Road , maharashtra 400708</p>
+            </div>
+        </div>
+
+        <div class="right-form">
+            <h2>Register Complaint</h2>
+            <form action="api/contact_process.php" method="POST">
+                <input type="text" name="name" placeholder="Full Name" required>
+
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" name="aadhar" placeholder="Aadhar No." pattern="[0-9]{12}" maxlength="12"
+                        required>
+                    <input type="text" name="mobile" placeholder="Mobile" pattern="[0-9]{10}" maxlength="10" required>
+                </div>
+
+                <select name="subject" required>
+                    <option value="">Select Topic</option>
+                    <option value="Technical Error">Technical Error</option>
+                    <option value="Vote Issue">Vote Issue</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <textarea name="complaint" rows="3" placeholder="Message..." required></textarea>
+
+                <button type="submit" class="submit-btn">Send Message Now</button>
+                <a href="index.html" class="back-btn">← Back to Login</a>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>online voting system</title>
+    <link rel="stylesheet" href="css/stylesheet.css">
+
+</head>
+
+<body class="home-bg">
+    <center>
+        <div id="headerSection">
+            <h1>ONLINE VOTING SYSTEM</h1>
+        </div>
+        <hr>
+
+        <div id="bodySection">
+            <form action="api/login.php" method="POST">
+                <h2>Login</h2>
+                <input type="Enter name" name="name" placeholder="enter a name"><br><br>
+
+                <input type="number" name="mobile" placeholder="Enter Mobile number" maxlength="10"
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" required><br><br>
+
+                <input type="number" name="aadhaar" placeholder="Enter Aadhaar Number" maxlength="12"
+                    oninput="this.value=this.value.slice(0,12)"><br><br>
+
+                <input type="password" name="password" placeholder="Enter password"><br><br>
+
+                <select id="dropbox" name="role">
+                    <option value="1">Voter</option>
+
+                </select><br><br>
+
+
+
+                <a href="routes/forgot-password.php" style="color: white; 
+          background-color: black; 
+          padding: 5px 10px; 
+          text-decoration: none; 
+          border-radius: 5px; 
+          display: inline-block; 
+          font-family: sans-serif; 
+          font-size: 14px;">
+                    Forgot Password? Reset Here
+                </a> <br><br>
+
+
+
+
+
+
+
+
+                <button id="loginbtn" type="submit">Login</button><br><br>
+
+
+
+                New user? <a href="routes/register.html">Register here</a>
+            </form>
+
+            <br>
+            <hr><br>
+
+
+            <h3>Admin Panel</h3>
+            <a href="admin/admin_login.php">
+                <button
+                    style="padding:10px 20px; background:#198754; color:white; border:none; border-radius:5px; cursor:pointer;">
+                    Admin Login
+                </button>
+            </a>
+
+            <!-- About Election Button (SIDE ME) -->
+            <a href="about_election.html" style="margin-left:15px;">
+                <button style="
+        padding:10px 20px;
+        background:#0d6efd;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    ">
+                    About Election
+                </button>
+            </a>
+
+            <br><br><a href="contact.html" style="text-decoration: none;">
+                <button style="
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(56, 239, 125, 0.6)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(56, 239, 125, 0.4)';">
+                    Contact Us
+                </button>
+            </a>
+        </div>
+    </center>
+</body>
+
+</html>
