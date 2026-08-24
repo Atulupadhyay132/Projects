@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction Check</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                );
+
+            min-height: 100vh;
+
+            padding: 20px;
+        }
+
+
+        .container {
+
+            max-width: 600px;
+
+            margin: 30px auto;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        h1 {
+
+            color: #667eea;
+
+            margin-bottom: 30px;
+
+            text-align: center;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #333;
+
+            font-weight: 600;
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border:
+                2px solid #e9ecef;
+
+            border-radius: 8px;
+
+            font-size: 1em;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            outline: none;
+
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    102,
+                    126,
+                    234,
+                    0.1
+                );
+        }
+
+
+        .button-group {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+
+        button {
+
+            flex: 1;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 1em;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.3s;
+        }
+
+
+        .btn-check {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                );
+
+            color: white;
+        }
+
+
+        .btn-check:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 20px
+                rgba(
+                    102,
+                    126,
+                    234,
+                    0.4
+                );
+        }
+
+
+        .btn-back {
+
+            background: #e9ecef;
+
+            color: #333;
+        }
+
+
+        .btn-back:hover {
+
+            background: #dee2e6;
+        }
+
+
+        .result {
+
+            margin-top: 30px;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            display: none;
+
+            text-align: center;
+        }
+
+
+        .result.fraud {
+
+            background: #ffe5e5;
+
+            border:
+                2px solid #ff6b6b;
+
+            color: #c92a2a;
+        }
+
+
+        .result.genuine {
+
+            background: #e5ffe5;
+
+            border:
+                2px solid #51cf66;
+
+            color: #2b8a2b;
+        }
+
+
+        .result h2 {
+
+            font-size: 1.8em;
+
+            margin-bottom: 10px;
+        }
+
+
+        .loading {
+
+            display: none;
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+
+        .spinner {
+
+            border:
+                4px solid #e9ecef;
+
+            border-top:
+                4px solid #667eea;
+
+            border-radius: 50%;
+
+            width: 40px;
+
+            height: 40px;
+
+            animation:
+                spin 1s linear infinite;
+
+            margin: 0 auto 15px auto;
+        }
+
+
+        @keyframes spin {
+
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        .error {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #ffe5e5;
+
+            border:
+                1px solid #ff6b6b;
+
+            border-radius: 8px;
+
+            color: #c92a2a;
+
+            display: none;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                padding: 25px 20px;
+            }
+
+
+            .button-group {
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <h1>Check Transaction</h1>
+
+
+        <!-- =====================================
+             TRANSACTION FORM
+        ====================================== -->
+
+        <form id="predictionForm">
+
+
+            <!-- Transaction Amount -->
+
+            <div class="form-group">
+
+                <label for="amount">
+                    Transaction Amount (INR)
+                </label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    placeholder="Enter transaction amount"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Transaction Type -->
+
+            <div class="form-group">
+
+                <label for="transaction_type">
+                    Transaction Type
+                </label>
+
+
+                <select
+                    id="transaction_type"
+                    name="transaction_type"
+                >
+
+                    <option value="card">
+                        Card Transaction
+                    </option>
+
+
+                    <option value="upi">
+                        UPI Transfer
+                    </option>
+
+
+                    <option value="bank">
+                        Bank Transfer
+                    </option>
+
+
+                    <option value="wallet">
+                        Digital Wallet
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Merchant -->
+
+            <div class="form-group">
+
+                <label for="merchant">
+                    Merchant / Recipient
+                </label>
+
+
+                <input
+                    type="text"
+                    id="merchant"
+                    name="merchant"
+                    placeholder="Enter merchant name"
+                >
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="button-group">
+
+
+                <button
+                    type="submit"
+                    class="btn-check"
+                >
+                    Analyze Transaction
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-back"
+                    onclick="window.location.href='/'"
+                >
+                    Back
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+        <!-- =====================================
+             LOADING
+        ====================================== -->
+
+        <div
+            class="loading"
+            id="loading"
+        >
+
+            <div class="spinner"></div>
+
+            <p>
+                Analyzing transaction...
+            </p>
+
+        </div>
+
+
+        <!-- =====================================
+             ERROR
+        ====================================== -->
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+        <!-- =====================================
+             RESULT
+        ====================================== -->
+
+        <div
+            class="result"
+            id="result"
+        >
+
+            <h2 id="resultTitle"></h2>
+
+            <p id="resultMessage"></p>
+
+            <p id="confidence"></p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+
+        document
+            .getElementById('predictionForm')
+            .addEventListener(
+                'submit',
+                async function(e) {
+
+                    e.preventDefault();
+
+
+                    // Get form values
+
+                    const amount =
+                        document
+                            .getElementById('amount')
+                            .value;
+
+
+                    const merchant =
+                        document
+                            .getElementById('merchant')
+                            .value;
+
+
+                    const transactionType =
+                        document
+                            .getElementById(
+                                'transaction_type'
+                            )
+                            .value;
+
+
+                    // Show loading
+
+                    document
+                        .getElementById('loading')
+                        .style.display = 'block';
+
+
+                    // Hide old result
+
+                    document
+                        .getElementById('result')
+                        .style.display = 'none';
+
+
+                    // Hide old error
+
+                    document
+                        .getElementById('error')
+                        .style.display = 'none';
+
+
+                    try {
+
+
+                        // =================================
+                        // CREATE 30 FEATURES
+                        // =================================
+
+                        const features = {};
+
+
+                        for (
+                            let i = 0;
+                            i < 30;
+                            i++
+                        ) {
+
+                            features[
+                                `feature_${i}`
+                            ] =
+                                Math.random() * 2 - 1;
+
+                        }
+
+
+                        // Add amount
+
+                        features['amount'] =
+                            parseFloat(amount);
+
+
+                        // Add transaction type
+
+                        features[
+                            'transaction_type'
+                        ] =
+                            transactionType;
+
+
+                        // =================================
+                        // SEND REQUEST TO FLASK
+                        // =================================
+
+                        const response =
+                            await fetch(
+                                '/predict',
+                                {
+
+                                    method: 'POST',
+
+                                    headers: {
+                                        'Content-Type':
+                                            'application/json'
+                                    },
+
+                                    body:
+                                        JSON.stringify(
+                                            features
+                                        )
+                                }
+                            );
+
+
+                        // Convert response to JSON
+
+                        const data =
+                            await response.json();
+
+
+                        // Hide loading
+
+                        document
+                            .getElementById('loading')
+                            .style.display = 'none';
+
+
+                        // =================================
+                        // CHECK SERVER ERROR
+                        // =================================
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.error ||
+                                'Prediction failed'
+                            );
+
+                        }
+
+
+                        // =================================
+                        // SHOW RESULT
+                        // =================================
+
+                        const resultDiv =
+                            document
+                                .getElementById(
+                                    'result'
+                                );
+
+
+                        resultDiv.style.display =
+                            'block';
+
+
+                        // =================================
+                        // FRAUD
+                        // =================================
+
+                        if (data.fraud) {
+
+
+                            resultDiv.className =
+                                'result fraud';
+
+
+                            document
+                                .getElementById(
+                                    'resultTitle'
+                                )
+                                .textContent =
+                                'FRAUD DETECTED';
+
+
+                            document
+                                .getElementById(
+                                    'resultMessage'
+                                )
+                                .textContent =
+                                'Suspicious transaction for INR '
+                                + amount
+                                + ' to '
+                                + (
+                                    merchant ||
+                                    'Unknown'
+                                );
+
+
+                        }
+
+
+                        // =================================
+                        // GENUINE
+                        // =================================
+
+                        else {
+
+
+                            resultDiv.className =
+                                'result genuine';
+
+
+                            document
+                                .getElementById(
+                                    'resultTitle'
+                                )
+                                .textContent =
+                                'GENUINE TRANSACTION';
+
+
+                            document
+                                .getElementById(
+                                    'resultMessage'
+                                )
+                                .textContent =
+                                'Verified transaction for INR '
+                                + amount
+                                + ' to '
+                                + (
+                                    merchant ||
+                                    'Unknown'
+                                );
+
+                        }
+
+
+                        // =================================
+                        // CONFIDENCE
+                        // =================================
+
+                        document
+                            .getElementById(
+                                'confidence'
+                            )
+                            .textContent =
+                            'Fraud Probability: '
+                            + Number(
+                                data.probability
+                            ).toFixed(2)
+                            + '%';
+
+
+                    }
+
+
+                    catch (error) {
+
+
+                        console.error(
+                            'Error:',
+                            error
+                        );
+
+
+                        // Hide loading
+
+                        document
+                            .getElementById('loading')
+                            .style.display = 'none';
+
+
+                        // Show error
+
+                        const errorDiv =
+                            document
+                                .getElementById(
+                                    'error'
+                                );
+
+
+                        errorDiv.textContent =
+                            'Error: '
+                            + error.message;
+
+
+                        errorDiv.style.display =
+                            'block';
+
+                    }
+
+                }
+            );
+
+    </script>
+
+
+</body>
+
+</html>
